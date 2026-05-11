@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Health Services Access Mapping — Home</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      color: #1a2b4a;
+      min-height: 100vh;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1A4BB5 0%, #0d3080 100%);
+      color: #fff;
+      text-align: center;
+      padding: 3.5rem 2rem 2.5rem;
+    }
+
+    .hero-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .hero-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .hero h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.85);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1px;
+      background: #c8d6ea;
+      border-bottom: 1px solid #c8d6ea;
+    }
+
+    .stat {
+      background: #fff;
+      text-align: center;
+      padding: 1.1rem 1rem;
+    }
+
+    .stat-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: #1A4BB5;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1A4BB5;
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: #5a7090;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #5a7090;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #dce8f5;
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: default;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 16px rgba(26,75,181,0.1);
+      transform: translateY(-2px);
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      background: #e8f0fc;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.85rem;
+    }
+
+    .card-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: #1A4BB5;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1a2b4a;
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .card p {
+      font-size: 0.8rem;
+      color: #5a7090;
+      line-height: 1.6;
+    }
+
+    .card .arrow {
+      margin-top: 0.75rem;
+      font-size: 0.78rem;
+      color: #1A4BB5;
+      font-weight: 500;
+    }
+
+    .info-banner {
+      background: #e8f0fc;
+      border-left: 4px solid #1A4BB5;
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+    }
+
+    .info-banner svg {
+      width: 20px;
+      height: 20px;
+      stroke: #1A4BB5;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .info-banner p {
+      font-size: 0.85rem;
+      color: #1a3a7a;
+      line-height: 1.7;
+    }
+
+    .referral-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .flow-step {
+      background: #fff;
+      border: 1px solid #dce8f5;
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1a2b4a;
+      white-space: nowrap;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .flow-step span {
+      display: block;
+      font-size: 0.65rem;
+      color: #5a7090;
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .flow-arrow {
+      color: #1A4BB5;
+      font-size: 1rem;
+      padding: 0 6px;
+      flex-shrink: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.25rem;
+      font-size: 0.75rem;
+      color: #8aa0bc;
+      border-top: 1px solid #dce8f5;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+        <circle cx="12" cy="9" r="2.5"/>
+      </svg>
+    </div>
+    <h1>Health Services Access Mapping Application</h1>
+    <p>
+      A geospatial platform for analysing and visualising healthcare access across all levels of Rwanda's referral system — from community health posts to national referral hospitals.
+    </p>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+      </div>
+      <div class="stat-value">5</div>
+      <div class="stat-label">Referral levels</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+      </div>
+      <div class="stat-value">30</div>
+      <div class="stat-label">Districts covered</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div class="stat-value">Time</div>
+      <div class="stat-label">Travel analysis</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="stat-value">Pop.</div>
+      <div class="stat-label">Catchment data</div>
+    </div>
+  </div>
+
+  <div class="section">
+
+    <!-- REFERRAL CHAIN -->
+    <div class="section-title">Rwanda's health referral system</div>
+    <div class="referral-flow">
+      <div class="flow-step">Community <span>Health Posts</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Health <span>Centres</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">District <span>Hospitals</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Provincial <span>Hospitals</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Referral <span>Hospitals</span></div>
+    </div>
+
+    <!-- FEATURE CARDS -->
+    <div class="section-title">Explore access layers</div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>Primary healthcare access</h3>
+        <p>Community-level access to health posts and health centres across Rwanda.</p>
+        <div class="arrow">View map →</div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8v4h8V3z"/><path d="M12 12v4m-2-2h4"/></svg>
+        </div>
+        <h3>Health centre → District hospital</h3>
+        <p>Travel time and distance for referrals from health centres to district hospitals.</p>
+        <div class="arrow">View map →</div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>District → Provincial access</h3>
+        <p>Connectivity and access mapping between district and provincial hospitals.</p>
+        <div class="arrow">View map →</div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </div>
+        <h3>Provincial → Referral access</h3>
+        <p>Pathways from provincial hospitals to national and specialist referral centres.</p>
+        <div class="arrow">View map →</div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3>Referral access</h3>
+        <p>Top-tier specialist and tertiary care access coverage and geographic reach.</p>
+        <div class="arrow">View map →</div>
+      </div>
+
+    </div>
+
+    <!-- INFO BANNER -->
+    <div class="info-banner">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p>
+        Use the navigation tabs above to explore each level of the health referral system. Maps display travel time, distance, and population catchment data to support evidence-based health planning and resource allocation.
+      </p>
+    </div>
+
+  </div>
+
+  <footer>
+    Health Services Access Mapping Application &nbsp;|&nbsp; Ministry of Health, Rwanda
+  </footer>
+
+</body>
+</html>
