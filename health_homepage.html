@@ -3,381 +3,616 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Health Services Access Mapping — Home</title>
+  <title>Health Services Access Mapping Application</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f4f8;
+      background: #eef3fb;
       color: #1a2b4a;
-      min-height: 100vh;
     }
 
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
     .hero {
-      background: linear-gradient(135deg, #1A4BB5 0%, #0d3080 100%);
-      color: #fff;
-      text-align: center;
-      padding: 3.5rem 2rem 2.5rem;
-    }
-
-    .hero-icon {
-      width: 64px;
-      height: 64px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 50%;
+      position: relative;
+      min-height: 460px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1.25rem;
+      text-align: center;
+      padding: 5rem 2rem 4.5rem;
+      overflow: hidden;
+      color: #fff;
     }
 
-    .hero-icon svg {
-      width: 32px;
-      height: 32px;
-      fill: none;
-      stroke: #fff;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    /* Hospital exterior photo */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1800&q=80&fit=crop&crop=center');
+      background-size: cover;
+      background-position: center 40%;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        155deg,
+        rgba(6, 20, 70, 0.87) 0%,
+        rgba(15, 55, 150, 0.76) 55%,
+        rgba(10, 80, 170, 0.66) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 680px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 50px;
+      padding: 7px 20px;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.6rem;
+      color: rgba(255,255,255,0.9);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-badge-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #60d4a0;
+      box-shadow: 0 0 8px #60d4a0;
+      flex-shrink: 0;
     }
 
     .hero h1 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      line-height: 1.3;
+      font-size: 2.6rem;
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.25rem;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.25);
     }
 
-    .hero p {
+    .hero h1 em {
+      font-style: normal;
+      color: #7ee8c8;
+    }
+
+    .hero-desc {
       font-size: 1rem;
-      color: rgba(255,255,255,0.85);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.7;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.8;
+      max-width: 560px;
+      margin: 0 auto 2rem;
     }
 
-    .stats-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 1px;
-      background: #c8d6ea;
-      border-bottom: 1px solid #c8d6ea;
-    }
-
-    .stat {
-      background: #fff;
-      text-align: center;
-      padding: 1.1rem 1rem;
-    }
-
-    .stat-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: #1A4BB5;
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      margin-bottom: 0.4rem;
-    }
-
-    .stat-value {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1A4BB5;
-      line-height: 1;
-      margin-bottom: 0.2rem;
-    }
-
-    .stat-label {
-      font-size: 0.72rem;
-      color: #5a7090;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .section {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-    }
-
-    .section-title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #5a7090;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .card {
-      background: #fff;
-      border: 1px solid #dce8f5;
-      border-radius: 10px;
-      padding: 1.25rem;
-      transition: box-shadow 0.2s, transform 0.2s;
-      cursor: default;
-    }
-
-    .card:hover {
-      box-shadow: 0 4px 16px rgba(26,75,181,0.1);
-      transform: translateY(-2px);
-    }
-
-    .card-icon {
-      width: 40px;
-      height: 40px;
-      background: #e8f0fc;
-      border-radius: 8px;
+    .hero-accent {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 0.85rem;
+      gap: 10px;
+      margin-top: 0.5rem;
     }
 
-    .card-icon svg {
-      width: 20px;
-      height: 20px;
+    .hero-accent-line {
+      width: 40px; height: 2px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 2px;
+    }
+
+    .hero-accent-text {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════
+       STATS BAR
+    ══════════════════════════════ */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: #fff;
+      box-shadow: 0 6px 30px rgba(26,75,181,0.09);
+      border-bottom: 1px solid #dde8f5;
+      position: relative;
+      z-index: 10;
+    }
+
+    .stat {
+      padding: 1.6rem 1rem;
+      text-align: center;
+      border-right: 1px solid #e8eef8;
+      transition: background 0.2s;
+    }
+
+    .stat:last-child { border-right: none; }
+    .stat:hover { background: #f5f9ff; }
+
+    .stat-icon { margin-bottom: 0.6rem; }
+
+    .stat-icon svg {
+      width: 26px; height: 26px;
       stroke: #1A4BB5;
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      fill: none; stroke-width: 1.6;
+      stroke-linecap: round; stroke-linejoin: round;
     }
 
-    .card h3 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #1a2b4a;
-      margin-bottom: 0.4rem;
-      line-height: 1.3;
-    }
-
-    .card p {
-      font-size: 0.8rem;
-      color: #5a7090;
-      line-height: 1.6;
-    }
-
-    .card .arrow {
-      margin-top: 0.75rem;
-      font-size: 0.78rem;
+    .stat-value {
+      font-size: 1.9rem;
+      font-weight: 800;
       color: #1A4BB5;
-      font-weight: 500;
+      line-height: 1;
+      margin-bottom: 0.3rem;
     }
 
-    .info-banner {
-      background: #e8f0fc;
-      border-left: 4px solid #1A4BB5;
-      border-radius: 0 8px 8px 0;
-      padding: 1rem 1.25rem;
-      display: flex;
-      gap: 0.85rem;
-      align-items: flex-start;
+    .stat-label {
+      font-size: 0.65rem;
+      color: #8aa0be;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      font-weight: 600;
     }
 
-    .info-banner svg {
-      width: 20px;
-      height: 20px;
-      stroke: #1A4BB5;
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex-shrink: 0;
-      margin-top: 2px;
+    /* ══════════════════════════════
+       CONTENT AREA
+    ══════════════════════════════ */
+    .content {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 4rem;
     }
 
-    .info-banner p {
-      font-size: 0.85rem;
-      color: #1a3a7a;
-      line-height: 1.7;
+    .section-eyebrow {
+      font-size: 0.66rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #2563eb;
+      font-weight: 700;
+      margin-bottom: 0.45rem;
+    }
+
+    .section-heading {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0a1830;
+      margin-bottom: 1.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    /* ══════════════════════════════
+       REFERRAL FLOW
+    ══════════════════════════════ */
+    .flow-card {
+      background: #fff;
+      border-radius: 18px;
+      border: 1px solid #dde8f8;
+      padding: 2rem 2.5rem;
+      margin-bottom: 3.5rem;
+      box-shadow: 0 4px 28px rgba(26,75,181,0.07);
     }
 
     .referral-flow {
       display: flex;
       align-items: center;
-      gap: 0;
+      justify-content: center;
       overflow-x: auto;
-      padding-bottom: 0.5rem;
-      margin-bottom: 2rem;
+      padding-bottom: 4px;
     }
 
-    .flow-step {
-      background: #fff;
-      border: 1px solid #dce8f5;
-      border-radius: 8px;
-      padding: 0.65rem 0.85rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #1a2b4a;
-      white-space: nowrap;
+    .flow-node { flex-shrink: 0; }
+
+    .flow-box {
+      background: linear-gradient(140deg, #f0f6ff 0%, #dbeafe 100%);
+      border: 1.5px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 1rem 1.4rem;
       text-align: center;
-      flex-shrink: 0;
+      min-width: 115px;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .flow-step span {
-      display: block;
+    .flow-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(37,99,235,0.12);
+    }
+
+    .flow-box-icon { margin-bottom: 6px; }
+
+    .flow-box-icon svg {
+      width: 18px; height: 18px;
+      stroke: #2563eb;
+      fill: none; stroke-width: 1.8;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .flow-box-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1e3a6e;
+    }
+
+    .flow-box-sub {
       font-size: 0.65rem;
-      color: #5a7090;
-      font-weight: 400;
+      color: #6080a8;
       margin-top: 2px;
     }
 
-    .flow-arrow {
-      color: #1A4BB5;
-      font-size: 1rem;
-      padding: 0 6px;
+    .flow-connector {
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
       flex-shrink: 0;
     }
 
-    footer {
-      text-align: center;
-      padding: 1.25rem;
-      font-size: 0.75rem;
-      color: #8aa0bc;
-      border-top: 1px solid #dce8f5;
-      background: #fff;
+    .flow-connector svg {
+      width: 24px; height: 24px;
+      stroke: #93c5fd;
+      fill: none; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
     }
+
+    /* ══════════════════════════════
+       DASHBOARD CARDS
+    ══════════════════════════════ */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.1rem;
+    }
+
+    .card {
+      background: #fff;
+      border: 1.5px solid #dde8f8;
+      border-radius: 18px;
+      padding: 1.6rem 1.3rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, #1A4BB5, #38bdf8);
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .card:hover {
+      box-shadow: 0 14px 44px rgba(26,75,181,0.14);
+      transform: translateY(-5px);
+      border-color: #93c5fd;
+    }
+
+    .card:hover::after { opacity: 1; }
+
+    .card-level {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #a0bcd8;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon-wrap {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border-radius: 13px;
+      border: 1px solid #bfdbfe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.1rem;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .card:hover .card-icon-wrap {
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      transform: scale(1.08);
+    }
+
+    .card-icon-wrap svg {
+      width: 22px; height: 22px;
+      stroke: #1A4BB5;
+      fill: none; stroke-width: 1.8;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .card h3 {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #0a1830;
+      line-height: 1.38;
+      margin-bottom: 0.55rem;
+    }
+
+    .card p {
+      font-size: 0.73rem;
+      color: #6a84a8;
+      line-height: 1.72;
+      flex-grow: 1;
+      margin-bottom: 1.2rem;
+    }
+
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: #1A4BB5;
+      margin-top: auto;
+    }
+
+    .card-cta svg {
+      width: 14px; height: 14px;
+      stroke: #1A4BB5;
+      fill: none; stroke-width: 2.5;
+      stroke-linecap: round; stroke-linejoin: round;
+      transition: transform 0.25s;
+    }
+
+    .card:hover .card-cta svg { transform: translateX(5px); }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    footer {
+      background: #07122e;
+      color: rgba(255,255,255,0.38);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.71rem;
+      letter-spacing: 0.04em;
+    }
+
+    footer strong { color: rgba(255,255,255,0.7); }
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
+  <!-- ── HERO ── -->
   <div class="hero">
-    <div class="hero-icon">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-        <circle cx="12" cy="9" r="2.5"/>
-      </svg>
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Rwanda Health GIS Platform
+      </div>
+      <h1>Health Services <em>Access</em><br/>Mapping Application</h1>
+      <p class="hero-desc">
+        A geospatial intelligence platform for analysing and visualising healthcare access across all levels of Rwanda's referral system — from community health posts to national referral hospitals.
+      </p>
+      <div class="hero-accent">
+        <div class="hero-accent-line"></div>
+        <span class="hero-accent-text">Rwanda · Health GIS Platform</span>
+        <div class="hero-accent-line"></div>
+      </div>
     </div>
-    <h1>Health Services Access Mapping Application</h1>
-    <p>
-      A geospatial platform for analysing and visualising healthcare access across all levels of Rwanda's referral system — from community health posts to national referral hospitals.
-    </p>
   </div>
 
-  <!-- STATS BAR -->
+  <!-- ── STATS ── -->
   <div class="stats-bar">
     <div class="stat">
       <div class="stat-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
       </div>
       <div class="stat-value">5</div>
-      <div class="stat-label">Referral levels</div>
+      <div class="stat-label">Referral Levels</div>
     </div>
     <div class="stat">
       <div class="stat-icon">
         <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
       </div>
       <div class="stat-value">30</div>
-      <div class="stat-label">Districts covered</div>
-    </div>
-    <div class="stat">
-      <div class="stat-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
-      <div class="stat-value">Time</div>
-      <div class="stat-label">Travel analysis</div>
+      <div class="stat-label">Districts Covered</div>
     </div>
     <div class="stat">
       <div class="stat-icon">
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       </div>
-      <div class="stat-value">Pop.</div>
-      <div class="stat-label">Catchment data</div>
+      <div class="stat-value">14M+</div>
+      <div class="stat-label">Population Mapped</div>
     </div>
   </div>
 
-  <div class="section">
+  <!-- ── CONTENT ── -->
+  <div class="content">
 
-    <!-- REFERRAL CHAIN -->
-    <div class="section-title">Rwanda's health referral system</div>
-    <div class="referral-flow">
-      <div class="flow-step">Community <span>Health Posts</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">Health <span>Centres</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">District <span>Hospitals</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">Provincial <span>Hospitals</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">Referral <span>Hospitals</span></div>
+    <div class="section-eyebrow">How it works</div>
+    <div class="section-heading">Rwanda's Health Referral System</div>
+
+    <div class="flow-card">
+      <div class="referral-flow">
+
+        <div class="flow-node">
+          <div class="flow-box">
+            <div class="flow-box-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="flow-box-title">Community</div>
+            <div class="flow-box-sub">Health Posts</div>
+          </div>
+        </div>
+
+        <div class="flow-connector">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </div>
+
+        <div class="flow-node">
+          <div class="flow-box">
+            <div class="flow-box-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div class="flow-box-title">Health</div>
+            <div class="flow-box-sub">Centres</div>
+          </div>
+        </div>
+
+        <div class="flow-connector">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </div>
+
+        <div class="flow-node">
+          <div class="flow-box">
+            <div class="flow-box-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8v4h8V3z"/><path d="M12 12v4m-2-2h4"/></svg>
+            </div>
+            <div class="flow-box-title">District</div>
+            <div class="flow-box-sub">Hospitals</div>
+          </div>
+        </div>
+
+        <div class="flow-connector">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </div>
+
+        <div class="flow-node">
+          <div class="flow-box">
+            <div class="flow-box-icon">
+              <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            </div>
+            <div class="flow-box-title">Provincial</div>
+            <div class="flow-box-sub">Hospitals</div>
+          </div>
+        </div>
+
+        <div class="flow-connector">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </div>
+
+        <div class="flow-node">
+          <div class="flow-box">
+            <div class="flow-box-icon">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="flow-box-title">Referral</div>
+            <div class="flow-box-sub">Hospitals</div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <!-- FEATURE CARDS -->
-    <div class="section-title">Explore access layers</div>
+    <!-- CARDS -->
+    <div class="section-eyebrow">Explore the data</div>
+    <div class="section-heading">Select an Access Level to View</div>
+
     <div class="cards">
 
-      <div class="card">
-        <div class="card-icon">
+      <div class="card" onclick="openDashboard('https://gh.space.gov.rw/portal/apps/dashboards/97ea5d54700a42c8b16e8645845474bc')">
+        <div class="card-level">Level 01</div>
+        <div class="card-icon-wrap">
           <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         </div>
-        <h3>Primary healthcare access</h3>
-        <p>Community-level access to health posts and health centres across Rwanda.</p>
-        <div class="arrow">View map →</div>
+        <h3>Primary Healthcare Access</h3>
+        <p>Community-level access to health posts and health centres across Rwanda's sectors.</p>
+        <span class="card-cta">Open Dashboard
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </span>
       </div>
 
-      <div class="card">
-        <div class="card-icon">
+      <div class="card" onclick="openDashboard('https://gh.space.gov.rw/portal/apps/dashboards/626b6461ae4948788b2c6b9b9231ecec')">
+        <div class="card-level">Level 02</div>
+        <div class="card-icon-wrap">
           <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8v4h8V3z"/><path d="M12 12v4m-2-2h4"/></svg>
         </div>
-        <h3>Health centre → District hospital</h3>
+        <h3>Health Centre → District Hospital</h3>
         <p>Travel time and distance for referrals from health centres to district hospitals.</p>
-        <div class="arrow">View map →</div>
+        <span class="card-cta">Open Dashboard
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </span>
       </div>
 
-      <div class="card">
-        <div class="card-icon">
+      <div class="card" onclick="openDashboard('https://gh.space.gov.rw/portal/apps/dashboards/b874415d6ebb4bf4b428189d5fef85be')">
+        <div class="card-level">Level 03</div>
+        <div class="card-icon-wrap">
           <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
-        <h3>District → Provincial access</h3>
-        <p>Connectivity and access mapping between district and provincial hospitals.</p>
-        <div class="arrow">View map →</div>
+        <h3>District → Provincial Access</h3>
+        <p>Connectivity and access mapping between district and provincial level hospitals.</p>
+        <span class="card-cta">Open Dashboard
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </span>
       </div>
 
-      <div class="card">
-        <div class="card-icon">
+      <div class="card" onclick="openDashboard('https://gh.space.gov.rw/portal/apps/dashboards/bd50d196e7bb4e4ea474fff04c44303e')">
+        <div class="card-level">Level 04</div>
+        <div class="card-icon-wrap">
           <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
         </div>
-        <h3>Provincial → Referral access</h3>
+        <h3>Provincial → Referral Access</h3>
         <p>Pathways from provincial hospitals to national and specialist referral centres.</p>
-        <div class="arrow">View map →</div>
+        <span class="card-cta">Open Dashboard
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </span>
       </div>
 
-      <div class="card">
-        <div class="card-icon">
+      <div class="card" onclick="openDashboard('https://gh.space.gov.rw/portal/apps/dashboards/7bcfb3bfcd114ef487fc3cb0c86204ad')">
+        <div class="card-level">Level 05</div>
+        <div class="card-icon-wrap">
           <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         </div>
-        <h3>Referral access</h3>
-        <p>Top-tier specialist and tertiary care access coverage and geographic reach.</p>
-        <div class="arrow">View map →</div>
+        <h3>Sector to Referral Access</h3>
+        <p>Top-tier specialist and tertiary care access coverage and geographic reach nationwide.</p>
+        <span class="card-cta">Open Dashboard
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </span>
       </div>
 
     </div>
-
-    <!-- INFO BANNER -->
-    <div class="info-banner">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <p>
-        Use the navigation tabs above to explore each level of the health referral system. Maps display travel time, distance, and population catchment data to support evidence-based health planning and resource allocation.
-      </p>
-    </div>
-
   </div>
 
+  <!-- ── FOOTER ── -->
   <footer>
-    Health Services Access Mapping Application &nbsp;|&nbsp; Ministry of Health, Rwanda
+    <strong>Health Services Access Mapping Application</strong> &nbsp;·&nbsp; Rwanda
   </footer>
+
+  <script>
+    function openDashboard(url) {
+      try { window.top.location.href = url; return; } catch(e) {}
+      try { window.parent.location.href = url; return; } catch(e) {}
+      try { window.top.open(url, '_self'); return; } catch(e) {}
+      window.open(url, '_blank');
+    }
+  </script>
 
 </body>
 </html>
